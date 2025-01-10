@@ -1,7 +1,9 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
-
+configurations {
+    all*.exclude group: 'com.android.support', module: 'support-compat'
+}
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -115,5 +117,17 @@ dependencies {
         implementation("com.facebook.react:hermes-android")
     } else {
         implementation jscFlavor
+    }
+}
+subprojects {
+    afterEvaluate {
+        project.configurations.all {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'com.android.support') {
+                    details.useVersion "1.0.0" // Replace with the version used in androidx
+                    details.because 'Avoiding duplicate class issues'
+                }
+            }
+        }
     }
 }

@@ -1,118 +1,177 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useEffect, useState } from 'react';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
   View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { CheckBox } from 'react-native-elements';
+import SplashScreen from 'react-native-splash-screen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+export default function SignupScreen() {
+  const [rememberMe, setRememberMe] = useState(false);
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      SplashScreen.hide();
+    }, 5000); // Changed to 5000ms (5 seconds)
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+      {/* Background Image */}
+      <ImageBackground
+        source={require('./src/assests/Vector.png')} // Replace with the correct path to your image
+        style={styles.imageBackground}
+      />
+
+      {/* Form */}
+      <View style={styles.formContainer}>
+        <Text style={styles.title}>Findr</Text>
+        <Text style={styles.subtitle}>Join the Search for Hope</Text>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Name</Text>
+          <TextInput style={styles.input} placeholder="Jane Cooper" />
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="debra.holt@example.com"
+            keyboardType="email-address"
+          />
+          <Text style={styles.hint}>Your email address is your username.</Text>
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="************"
+            secureTextEntry
+          />
+          <Text style={styles.hint}>Your password must be 8 characters.</Text>
+        </View>
+
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            checked={rememberMe}
+            onPress={() => setRememberMe(!rememberMe)}
+            containerStyle={styles.checkboxContainer}
+            title="Remember me"
+            textStyle={styles.checkboxText}
+          />
+          <Text style={styles.checkboxHint}>
+            Save my login details for next time.
+          </Text>
+        </View>
+
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.link}>Need Help or Have Questions?</Text>
+      </View>
     </View>
   );
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 2,
+    backgroundColor: '#ffffff',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  imageBackground: {
+    width: '90%',
+    height: 120,
+    resizeMode: 'contain',
+    position: 'absolute',
+    top: 0,
+    left: 200,
+    right: 0,
+    bottom: 0,
   },
-  sectionDescription: {
-    marginTop: 8,
+  formContainer: {
+    flex: 1,
+    marginTop: 150,
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#6D28D9',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#4B5563',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  inputGroup: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#374151',
+    marginBottom: 5,
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    fontSize: 16,
+  },
+  hint: {
+    fontSize: 12,
+    color: '#9CA3AF',
+    marginTop: 5,
+  },
+  checkboxContainer: {
+    marginBottom: 20,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    padding: 0,
+  },
+  checkboxText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#374151',
+  },
+  checkboxHint: {
+    fontSize: 12,
+    color: '#9CA3AF',
+    marginTop: 5,
+  },
+  button: {
+    height: 50,
+    backgroundColor: '#6D28D9',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#ffffff',
     fontSize: 18,
-    fontWeight: '400',
+    fontWeight: 'bold',
   },
-  highlight: {
-    fontWeight: '700',
+  link: {
+    fontSize: 14,
+    color: '#6D28D9',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
   },
 });
-
-export default App;
