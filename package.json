@@ -10,11 +10,19 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.24.0",
+    "@react-navigation/native": "^7.0.14",
+    "@react-navigation/stack": "^7.1.1",
+    "@reduxjs/toolkit": "^2.5.0",
     "@rneui/themed": "^4.0.0-rc.8",
+    "firebase": "^11.1.0",
     "react": "18.3.1",
     "react-native": "0.76.0",
     "react-native-elements": "^3.4.3",
-    "react-native-splash-screen": "^3.3.0"
+    "react-native-splash-screen": "^3.3.0",
+    "react-native-toast-message": "^2.2.1",
+    "react-redux": "^9.2.0",
+    "uninstall": "^0.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
